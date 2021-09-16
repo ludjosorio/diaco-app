@@ -1,0 +1,264 @@
+<div class="auth-wrapper align-items-stretch">
+  <div class="flex-grow-1 wrapper">
+    <div class="col-sm-12">
+      <app-card cardTitle="Spinner" *ngIf="loadDependencies" [options]="false" [hidHeader]="true">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </app-card>
+      <app-card cardTitle="Formulario de queja - DIACO" [options]="false">
+        <form action="javascript:" [formGroup]="complaintForm">
+          <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" id="anonymous" (change)="setAnonymous()">
+            <label class="custom-control-label" for="anonymous">Anónimo (no requiere información del consumidor)</label>
+          </div>
+          <div *ngIf="!anonymous" formGroupName="consumer">
+            <div class="form-row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <fieldset class="form-group">
+                    <label class="col-sm-4 col-form-label">Nacionalidad</label>
+                    <div class="col-sm-12">
+                      <div class="form-check" *ngFor="let nacionality of nationalities">
+                        <input class="form-check-input" type="radio" name="nationalityId"
+                          id="nacionality-{{nacionality.id}}" formControlName="nationalityId"
+                          [value]="numberValue(nacionality.id)">
+                        <label class="form-check-label"
+                          for="nacionality-{{nacionality.id}}">{{nacionality.name}}</label>
+                        <small class="text-danger"
+                          *ngIf="complaintForm.get('consumer').get('nationalityId').hasError('required') && complaintForm.get('consumer').get('nationalityId').touched">
+                          Este campo es requerido
+                        </small>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <fieldset class="form-group">
+                    <label class="col-sm-4 col-form-label">Tipo consumidor</label>
+                    <div class="col-sm-12">
+                      <div class="form-check" *ngFor="let typeConsumer of typeConsumers">
+                        <input class="form-check-input" type="radio" name="typeConsumerId"
+                          formControlName="typeConsumerId" id="typeConsumer-{{typeConsumer.id}}"
+                          [value]="numberValue(typeConsumer.id)">
+                        <label class="form-check-label"
+                          for="typeConsumer-{{typeConsumer.id}}">{{typeConsumer.name}}</label>
+                        <small class="text-danger"
+                          *ngIf="complaintForm.get('consumer').get('typeConsumerId').hasError('required') && complaintForm.get('consumer').get('typeConsumerId').touched">
+                          Este campo es requerido
+                        </small>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <fieldset class="form-group">
+                    <label class="col-sm-4 col-form-label">Género</label>
+                    <div class="col-sm-12">
+                      <div class="form-check" *ngFor="let gender of genders">
+                        <input class="form-check-input" type="radio" name="genderId" formControlName="genderId"
+                          id="gender-{{gender.id}}" [value]="numberValue(gender.id)">
+                        <label class="form-check-label" for="gender-{{gender.id}}">{{gender.name}}</label>
+                        <small class="text-danger"
+                          *ngIf="complaintForm.get('consumer').get('genderId').hasError('required') && complaintForm.get('consumer').get('genderId').touched">
+                          Este campo es requerido
+                        </small>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="documentId">Documento de identificación</label>
+                <input type="number" max="13" min="13" class="form-control" id="documentId" formControlName="dpi"
+                  placeholder="0000 11111 0000
+                " (blur)="searchConsumer()">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('required') &&
+                  complaintForm.get('consumer').get('dpi').touched">
+                  Este campo es requerido
+                </small>
+                <!-- <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('minlength')">
+                  The minimum length for this field is
+                  {{complaintForm.get('consumer').get('dpi').errors.minlength.requiredLength}}
+                  characters.
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('maxlength')">
+                  The maximum length for this field is
+                  {{complaintForm.get('consumer').get('dpi').errors.maxlength.requiredLength}}
+                  characters.
+                </small> -->
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nombre">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="homePhone">Teléfono domicilio</label>
+                <input type="number" class="form-control" id="homePhone" formControlName="homePhone"
+                  placeholder="00001111">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Celular</label>
+                <input type="number" class="form-control" id="phone" formControlName="phone" placeholder="11110000">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="email">Correo</label>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                  placeholder="email@email.com">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="address">Dirección</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="departament">Departamento</label>
+                <select id="departament" class="form-control" formControlName="departmentId"
+                  (change)="selectConsumerDepartment($event)">
+                  <option selected>Seleccionar departamento</option>
+                  <option value="{{department.id}}" *ngFor="let department of departments">{{department.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="municipality">Municipio</label>
+                <select id="municipality" formControlName="municipalityId" class="form-control">
+                  <option selected>Seleccionar municipio</option>
+                  <option value="{{municipality.id}}" *ngFor="let municipality of municipalities">{{municipality.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <h5 class="text-warning">Si su información no se encuentra correcta, envíe la información a correcta a
+              administracion@diaco.com.gt</h5>
+          </div>
+
+          <div id="business" formGroupName="provider">
+            <h5 class="mt-5">Datos del comercio</h5>
+            <hr>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nit">Nit</label>
+                <input type="text" class="form-control" id="nit" formControlName="nit" placeholder="0000000"
+                  (blur)="searchProvider()">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="tradeName">Nombre</label>
+                <input type="text" class="form-control" id="tradeName" formControlName="name"
+                  placeholder="Cafetería Quetzal">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="businessName">Razón social</label>
+                <input type="text" class="form-control" id="businessName" formControlName="businessName"
+                  placeholder="Cafetería, S.A.">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="businessAddress">Dirección</label>
+                <input type="text" class="form-control" id="businessAddress" formControlName="address" placeholder="">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="businessPhone">Teléfono</label>
+                <input type="text" class="form-control" id="businessPhone" formControlName="phone">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="businessEmail">Correo</label>
+                <input type="email" class="form-control" id="businessEmail" formControlName="email"
+                  placeholder="email@business.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="departament">Departamento</label>
+                <select id="departament" class="form-control" (change)="selectProviderDepartment($event)">
+                  <option selected>Seleccionar departamento</option>
+                  <option value="{{department.id}}" *ngFor="let department of providerDepartments">{{department.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="municipality">Municipio</label>
+                <select id="municipality" formControlName="municipalityId" class="form-control">
+                  <option selected>Seleccionar municipio</option>
+                  <option value="{{municipality.id}}" *ngFor="let municipality of providerMunicipalities">
+                    {{municipality.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="zoneNumber">Zona</label>
+                <select id="zoneNumber" formControlName="zoneNumber" class="form-control">
+                  <option selected>Número de zona</option>
+                  <option value="{{zoneNumber}}" *ngFor="let zoneNumber of numberZones">{{zoneNumber}}</option>
+                </select>
+              </div>
+            </div>
+            <h5 class="text-warning">Si la información del comercio no se encuentra correcta, envíe la información a
+              correcta a administracion@diaco.com.gt</h5>
+          </div>
+
+          <div id="complain">
+            <h5 class="mt-5">Queja</h5>
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="invoiceNumber">Document (Factura)</label>
+                <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber"
+                  placeholder="FAC-00001">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="invoiceDate">Fecha del documento</label>
+                <input type="date" class="form-control" id="invoiceDate" formControlName="invoiceDate"
+                  placeholder="01/01/2021">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="branchDiaco">Diaco Sede</label>
+                <select id="branchDiaco" formControlName="branchId" class="form-control">
+                  <option selected>Seleccionar sede diaco</option>
+                  <option value="{{diacoBranch.id}}" *ngFor="let diacoBranch of diacoBranches">{{diacoBranch.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="complaintDetail">Detalle de queja</label>
+                <textarea class="form-control" id="complaintDetail" formControlName="complaintDetail"
+                  rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="complaintRequest">Solicito que</label>
+                <textarea class="form-control" id="complaintRequest" formControlName="complaintRequest"
+                  rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+          <app-toast uID="toast6" toastTitle="Delay 2s" toastCaption="11 min ago" toastClass="m-b-10">
+            {{toastMessage}}
+          </app-toast>
+          <!-- <div class="col">
+              <button class="btn btn-primary" (click)="getDependencyListings()">3 sec</button>
+            </div> -->
+          <!-- [disabled]="complaintForm.invalid" -->
+          <button type="submit" class="btn btn-primary" (click)="createComplaint()">Crear queja</button>
+        </form>
+      </app-card>
+    </div>
+  </div>
+</div>

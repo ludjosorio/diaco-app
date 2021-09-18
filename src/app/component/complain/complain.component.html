@@ -28,7 +28,7 @@
                         <label class="form-check-label"
                           for="nacionality-{{nacionality.id}}">{{nacionality.name}}</label>
                         <small class="text-danger"
-                          *ngIf="complaintForm.get('consumer').get('nationalityId').hasError('required') && complaintForm.get('consumer').get('nationalityId').touched">
+                          *ngIf="complaintForm.get('consumer').get('nationalityId').errors?.required ">
                           Este campo es requerido
                         </small>
                       </div>
@@ -48,7 +48,7 @@
                         <label class="form-check-label"
                           for="typeConsumer-{{typeConsumer.id}}">{{typeConsumer.name}}</label>
                         <small class="text-danger"
-                          *ngIf="complaintForm.get('consumer').get('typeConsumerId').hasError('required') && complaintForm.get('consumer').get('typeConsumerId').touched">
+                          *ngIf="complaintForm.get('consumer').get('typeConsumerId').errors?.required ">
                           Este campo es requerido
                         </small>
                       </div>
@@ -66,7 +66,7 @@
                           id="gender-{{gender.id}}" [value]="numberValue(gender.id)">
                         <label class="form-check-label" for="gender-{{gender.id}}">{{gender.name}}</label>
                         <small class="text-danger"
-                          *ngIf="complaintForm.get('consumer').get('genderId').hasError('required') && complaintForm.get('consumer').get('genderId').touched">
+                          *ngIf="complaintForm.get('consumer').get('genderId').errors?.required ">
                           Este campo es requerido
                         </small>
                       </div>
@@ -78,38 +78,46 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="documentId">Documento de identificación</label>
-                <input type="number" max="13" min="13" class="form-control" id="documentId" formControlName="dpi"
-                  placeholder="0000 11111 0000
+                <input type="text" minlength="8" maxlength="13" class="form-control" id="documentId"
+                  formControlName="dpi" placeholder="0000 11111 0000
                 " (blur)="searchConsumer()">
-                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('required') &&
-                  complaintForm.get('consumer').get('dpi').touched">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').errors?.required">
                   Este campo es requerido
                 </small>
-                <!-- <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('minlength')">
-                  The minimum length for this field is
-                  {{complaintForm.get('consumer').get('dpi').errors.minlength.requiredLength}}
-                  characters.
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').errors?.pattern">
+                  El documento de identificación debe ser númerico y tener un mínimo de 8 dígitos y máximo 13
                 </small>
-                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('dpi').hasError('maxlength')">
-                  The maximum length for this field is
-                  {{complaintForm.get('consumer').get('dpi').errors.maxlength.requiredLength}}
-                  characters.
-                </small> -->
               </div>
               <div class="form-group col-md-6">
                 <label for="name">Nombre</label>
                 <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nombre">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('name').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="homePhone">Teléfono domicilio</label>
-                <input type="number" class="form-control" id="homePhone" formControlName="homePhone"
-                  placeholder="00001111">
+                <input type="text" minlength="8" maxlength="8" class="form-control" id="homePhone"
+                  formControlName="homePhone" placeholder="00001111">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('homePhone').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('homePhone').errors?.pattern">
+                  El teléfono debe ser de 8 dígitos.
+                </small>
               </div>
               <div class="form-group col-md-6">
                 <label for="phone">Celular</label>
-                <input type="number" class="form-control" id="phone" formControlName="phone" placeholder="11110000">
+                <input type="text" minlength="8" maxlength="8" class="form-control" id="phone" formControlName="phone"
+                  placeholder="11110000">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('phone').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('phone').errors?.pattern">
+                  El teléfono debe ser de 8 dígitos.
+                </small>
               </div>
             </div>
             <div class="form-row">
@@ -117,10 +125,19 @@
                 <label for="email">Correo</label>
                 <input type="email" class="form-control" id="email" formControlName="email"
                   placeholder="email@email.com">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('email').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('email').errors?.email">
+                  Debes ingresar un correo válido
+                </small>
               </div>
               <div class="form-group col-md-6">
                 <label for="address">Dirección</label>
                 <input type="text" class="form-control" id="address" formControlName="address">
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('address').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
             </div>
             <div class="form-row">
@@ -131,6 +148,9 @@
                   <option selected>Seleccionar departamento</option>
                   <option value="{{department.id}}" *ngFor="let department of departments">{{department.name}}</option>
                 </select>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('departmentId').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
               <div class="form-group col-md-4">
                 <label for="municipality">Municipio</label>
@@ -139,6 +159,9 @@
                   <option value="{{municipality.id}}" *ngFor="let municipality of municipalities">{{municipality.name}}
                   </option>
                 </select>
+                <small class="text-danger" *ngIf="complaintForm.get('consumer').get('municipalityId').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
             </div>
             <h5 class="text-warning">Si su información no se encuentra correcta, envíe la información a correcta a
@@ -152,13 +175,22 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="nit">Nit</label>
-                <input type="text" class="form-control" id="nit" formControlName="nit" placeholder="0000000"
-                  (blur)="searchProvider()">
+                <input type="text" minlength="8" maxlength="8" class="form-control" id="nit" formControlName="nit"
+                  placeholder="0000000" (blur)="searchProvider()">
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('nit').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('nit').errors?.pattern">
+                  El Nit debe ser númerico y tener un mínimo de 8 dígitos y máximo 8
+                </small>
               </div>
               <div class="form-group col-md-6">
                 <label for="tradeName">Nombre</label>
                 <input type="text" class="form-control" id="tradeName" formControlName="name"
                   placeholder="Cafetería Quetzal">
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('name').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
             </div>
             <div class="form-row">
@@ -166,47 +198,33 @@
                 <label for="businessName">Razón social</label>
                 <input type="text" class="form-control" id="businessName" formControlName="businessName"
                   placeholder="Cafetería, S.A.">
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('businessName').errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
               <div class="form-group col-md-6">
-                <label for="businessAddress">Dirección</label>
-                <input type="text" class="form-control" id="businessAddress" formControlName="address" placeholder="">
+                <label for="businessPhone">Teléfono</label>
+                <input type="text" class="form-control" minlength="8" maxlength="8" id="businessPhone"
+                  formControlName="phone">
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('phone').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('phone').errors?.pattern">
+                  El teléfono debe ser de 8 dígitos.
+                </small>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="businessPhone">Teléfono</label>
-                <input type="text" class="form-control" id="businessPhone" formControlName="phone">
-              </div>
               <div class="form-group col-md-6">
                 <label for="businessEmail">Correo</label>
                 <input type="email" class="form-control" id="businessEmail" formControlName="email"
                   placeholder="email@business.com">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="departament">Departamento</label>
-                <select id="departament" class="form-control" (change)="selectProviderDepartment($event)">
-                  <option selected>Seleccionar departamento</option>
-                  <option value="{{department.id}}" *ngFor="let department of providerDepartments">{{department.name}}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="municipality">Municipio</label>
-                <select id="municipality" formControlName="municipalityId" class="form-control">
-                  <option selected>Seleccionar municipio</option>
-                  <option value="{{municipality.id}}" *ngFor="let municipality of providerMunicipalities">
-                    {{municipality.name}}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="zoneNumber">Zona</label>
-                <select id="zoneNumber" formControlName="zoneNumber" class="form-control">
-                  <option selected>Número de zona</option>
-                  <option value="{{zoneNumber}}" *ngFor="let zoneNumber of numberZones">{{zoneNumber}}</option>
-                </select>
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('email').errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger" *ngIf="complaintForm.get('provider').get('email').errors?.email">
+                  Debes ingresar un correo válido
+                </small>
               </div>
             </div>
             <h5 class="text-warning">Si la información del comercio no se encuentra correcta, envíe la información a
@@ -217,23 +235,57 @@
             <h5 class="mt-5">Queja</h5>
             <hr>
             <div class="form-row">
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-6">
                 <label for="invoiceNumber">Document (Factura)</label>
                 <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber"
                   placeholder="FAC-00001">
+                <small class="text-danger" *ngIf="complaintForm.controls.invoiceNumber.errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-6">
                 <label for="invoiceDate">Fecha del documento</label>
                 <input type="date" class="form-control" id="invoiceDate" formControlName="invoiceDate"
                   placeholder="01/01/2021">
+                <small class="text-danger" *ngIf="complaintForm.controls.invoiceDate.errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
-              <div class="form-group col-md-4">
-                <label for="branchDiaco">Diaco Sede</label>
-                <select id="branchDiaco" formControlName="branchId" class="form-control">
-                  <option selected>Seleccionar sede diaco</option>
-                  <option value="{{diacoBranch.id}}" *ngFor="let diacoBranch of diacoBranches">{{diacoBranch.name}}
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="departament">Departamento</label>
+                <select id="departament" class="form-control" formControlName="departmentId"
+                  (change)="selectComplaintDepartament($event)">
+                  <option selected>Seleccionar departamento</option>
+                  <option value="{{department.id}}" *ngFor="let department of complaintDepartments">{{department.name}}
                   </option>
                 </select>
+                <small class="text-danger" *ngIf="complaintForm.controls.departmentId.errors?.required">
+                  Este campo es requerido
+                </small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="municipality">Municipio</label>
+                <select id="municipality" formControlName="municipalityId" class="form-control">
+                  <option selected>Seleccionar municipio</option>
+                  <option value="{{municipality.id}}" *ngFor="let municipality of complaintMunicipalities">
+                    {{municipality.name}}
+                  </option>
+                </select>
+                <small class="text-danger" *ngIf="complaintForm.controls.departmentId.errors?.required">
+                  Este campo es requerido
+                </small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="businessAddress">Dirección</label>
+                <textarea class="form-control" id="complaintDetail" formControlName="address"
+                  placeholder="Centro comercial Santa Clara, 6ta. ave" rows="2"></textarea>
+                <small class="text-danger" *ngIf="complaintForm.controls.address.errors?.required">
+                  Este campo es requerido
+                </small>
               </div>
             </div>
             <div class="form-row">
@@ -241,11 +293,25 @@
                 <label for="complaintDetail">Detalle de queja</label>
                 <textarea class="form-control" id="complaintDetail" formControlName="complaintDetail"
                   rows="3"></textarea>
+                <small class="text-danger" *ngIf="complaintForm.controls.complaintDetail.errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger"
+                  *ngIf="complaintForm.controls.complaintDetail.errors?.maxlength || complaintForm.controls.complaintDetail.errors?.minlength">
+                  El detalle de la queja debe tener un mínimo de 25 y máximo 250
+                </small>
               </div>
               <div class="form-group col-md-6">
                 <label for="complaintRequest">Solicito que</label>
                 <textarea class="form-control" id="complaintRequest" formControlName="complaintRequest"
                   rows="3"></textarea>
+                <small class="text-danger" *ngIf="complaintForm.controls.complaintRequest.errors?.required">
+                  Este campo es requerido
+                </small>
+                <small class="text-danger"
+                  *ngIf="complaintForm.controls.complaintRequest.errors?.maxlength || complaintForm.controls.complaintRequest.errors?.minlength">
+                  El detalle de la queja debe tener un mínimo de 25 y máximo 250
+                </small>
               </div>
             </div>
           </div>
@@ -255,8 +321,10 @@
           <!-- <div class="col">
               <button class="btn btn-primary" (click)="getDependencyListings()">3 sec</button>
             </div> -->
-          <!-- [disabled]="complaintForm.invalid" -->
-          <button type="submit" class="btn btn-primary" (click)="createComplaint()">Crear queja</button>
+          <button type="submit" class="btn btn-primary"  (click)="createComplaint()">Crear queja</button>
+          <small class="text-danger" *ngIf="complaintForm.invalid">
+            Revisa que toda la información este ingresada y correcta
+          </small>
         </form>
       </app-card>
     </div>

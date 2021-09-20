@@ -9,7 +9,7 @@
         </div>
       </app-card>
       <app-card cardTitle="Formulario de queja - DIACO" [options]="false">
-        <form action="javascript:" [formGroup]="complaintForm">
+        <form action="javascript:" [formGroup]="complaintForm" *ngIf="!complaintCreated">
           <div class="custom-control custom-checkbox mb-3">
             <input type="checkbox" class="custom-control-input" id="anonymous" (change)="setAnonymous()">
             <label class="custom-control-label" for="anonymous">Anónimo (no requiere información del consumidor)</label>
@@ -315,18 +315,38 @@
               </div>
             </div>
           </div>
-          <app-toast uID="toast6" toastTitle="Delay 2s" toastCaption="11 min ago" toastClass="m-b-10">
+          <app-toast uID="toast6" toastTitle="Nueva alerta" toastCaption="" toastClass="m-b-10">
             {{toastMessage}}
           </app-toast>
-          <!-- <div class="col">
-              <button class="btn btn-primary" (click)="getDependencyListings()">3 sec</button>
-            </div> -->
-          <button type="submit" class="btn btn-primary"  (click)="createComplaint()">Crear queja</button>
+          <button type="submit" class="btn btn-primary" [disabled]="complaintForm.invalid" (click)="createComplaint()">Crear queja</button>
           <small class="text-danger" *ngIf="complaintForm.invalid">
             Revisa que toda la información este ingresada y correcta
           </small>
         </form>
+        <div class="col-md-12" *ngIf="complaintCreated">
+          <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="bg-c-blue">
+            <div class="row align-items-center">
+              <div class="col-12">
+                <h4 class="text-c-blue">Tu queja ha sido credada correctamente. &nbsp; <i class="feather icon-check f-28"></i> </h4>
+              </div>
+            </div>
+            <div class="app-card-footer">
+              <div class="row align-items-center">
+                <div class="col-3 text-left">
+                </div>
+                <div class="col-6">
+                  <button type="submit" class="btn btn-success" (click)="createNewComplaint()">Crear nueva
+                    queja</button>
+                </div>
+                <div class="col-3 text-right">
+                </div>
+              </div>
+            </div>
+          </app-card>
+        </div>
       </app-card>
     </div>
   </div>
+
+
 </div>

@@ -12,6 +12,7 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class ComplainComponent implements OnInit {
 
+  public complaintCreated: boolean = false;
   public nationalities: Array<any> = [];
   public genders: Array<IGender> = [];
   public typeConsumers: Array<any> = [];
@@ -116,10 +117,16 @@ export class ComplainComponent implements OnInit {
       }
       // this.findInvalidControls();
       await this.api.post('/complain', data);
+      this.complaintCreated = true;
+      this.complaintForm.reset();
     } catch (error) {
       this.toastMessage = error.message || 'Ha ocurrido un error';
       this.toastEvent.toast({ uid: 'toast6', delay: 3000 });
     }
+  }
+
+  createNewComplaint() {
+    this.complaintCreated = false;
   }
 
   public findInvalidControls() {

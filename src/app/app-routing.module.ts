@@ -59,7 +59,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'complain',
+    path: 'queja',
     component: ComplainComponent,
   }
 ];

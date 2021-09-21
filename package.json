@@ -1,13 +1,18 @@
 {
-  "name": "ng-able-pro",
+  "name": "diaco-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
+  },
+  "engines": {
+    "node": "12.18.2",
+    "npm": "6.14.5"
   },
   "private": true,
   "dependencies": {

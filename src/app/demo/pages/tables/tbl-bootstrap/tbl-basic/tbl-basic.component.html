@@ -1,340 +1,196 @@
 <div class="row">
-  <!-- [ basic-table ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Basic Table" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-  <!-- [ basic-table ] end -->
-  <!-- [ inverse-table ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Inverse Table" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table table-inverse">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-  <!-- [ inverse-table ] end -->
   <!-- [ Hover-table ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Hover Table" blockClass="table-border-style">
+  <div class="col-md-12">
+    <br>
+    <br>
+    <div class="form-group col-md-6">
+      <label for="stringSearch">ID de la queja a buscar</label>
+      <input type="text" class="form-control" id="stringSearch" [(ngModel)]="stringSearch" (change)="updateFilter()">
+    </div>
+    <app-card cardTitle="" [hidHeader]="true" blockClass="table-border-style">
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
+            <tr>
+              <th></th>
+              <th>Estado</th>
+              <th>Id Queja</th>
+              <th>Factura</th>
+              <th>Fecha de factura</th>
+              <th>Consumidor</th>
+              <th>Comercio</th>
+              <!-- <th>Departamento</th>
+              <th>Municipio</th>
+              <th>Dirección</th> -->
+              <th>Detalle</th>
+              <th>Solicitud</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+            <tr *ngFor="let complaint of data; let i = index">
+              <td>
+                <i class="feather icon-edit text-muted" (click)="editComplaint(i); myLargeModalLabel.show()"></i>
+              </td>
+              <td
+                [style]="complaint.status?.name === 'CREADA' ? 'background-color: #005bff63' :
+                complaint.status?.name==='EN TRÁMITE' ? 'background-color: #ff870bc7' : 'background-color: #29d229bf' ">
+                {{complaint.status.name}}</td>
+              <td>{{complaint.id}}</td>
+              <td>{{complaint.invoiceNumber}}</td>
+              <td>{{complaint.invoiceDate | date }}</td>
+              <td>{{complaint.consumer.name}}</td>
+              <td>{{complaint.provider.name}}</td>
+              <!-- <td>{{complaint.municipality?.department.name}}</td>
+              <td>{{complaint.municipality?.name}}</td>
+              <td>{{complaint.address}}</td> -->
+              <td>{{complaint.complaintDetail}}</td>
+              <td>{{complaint.complaintRequest}}</td>
+            </tr>
           </tbody>
         </table>
       </div>
-    </app-card>
-  </div>
-  <!-- [ Hover-table ] end -->
-  <!-- [ dark-table ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Dark Table" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table table-dark">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
+      <div>
+        <app-ui-modal #myLargeModalLabel [dialogClass]="'modal-lg'">
+          <div class=" app-modal-header">
+            <h5 class="modal-title">Queja - <strong>{{complaint.id}}</strong></h5>
+            <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+              (click)="myLargeModalLabel.hide()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="app-modal-body">
+            <h4>Datos del consumidor</h4>
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="documentId">Documento de identificación</label>
+                <input readonly type="text" class="form-control" id="documentId" value="{{complaint.consumer?.dpi}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Nombre</label>
+                <input readonly type="text" class="form-control" id="name" value="{{complaint.consumer?.name}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="homePhone">Teléfono domicilio</label>
+                <input readonly type="text" class="form-control" id="homePhone"
+                  value="{{complaint.consumer?.homePhone}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Celular</label>
+                <input readonly type="text" class="form-control" id="phone" value="{{complaint.consumer?.phone}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="email">Correo</label>
+                <input readonly type="email" class="form-control" id="email" value="{{complaint.consumer?.email}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="address">Dirección</label>
+                <input readonly type="text" class="form-control" id="address" value="{{complaint.consumer?.address}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="department">Departamento</label>
+                <input readonly type="text" class="form-control" id="department"
+                  value="{{complaint.consumer?.municipality?.department?.name}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="municipality">Municipio</label>
+                <input readonly type="text" class="form-control" id="municipality"
+                  value="{{complaint.consumer?.municipality?.name}}">
+              </div>
+            </div>
+            <h4>Datos del comercio</h4>
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nit">Nit</label>
+                <input readonly type="text" class="form-control" id="nit" value="{{complaint.provider?.nit}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="providerName">Nombre</label>
+                <input readonly type="text" class="form-control" id="providerName" value="{{complaint.provider?.name}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="businessName">Razón social</label>
+                <input readonly type="text" class="form-control" id="businessName"
+                  value="{{complaint.provider?.businessName}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phoneProvider">Teléfono</label>
+                <input readonly type="text" class="form-control" id="phoneProvider"
+                  value="{{complaint.provider?.phone}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="emailProvider">Correo</label>
+                <input readonly type="email" class="form-control" id="emailProvider"
+                  value="{{complaint.provider?.email}}">
+              </div>
+            </div>
+            <h4>Datos de la queja</h4>
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="invoiceNumber">Número factura</label>
+                <input readonly type="text" class="form-control" id="invoiceNumber" value="{{complaint.invoiceNumber}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="invoiceDate">Fecha factura</label>
+                <input readonly type="text" class="form-control" id="invoiceDate"
+                  value="{{complaint.invoiceDate | date}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="complaintDepartment">Departamento</label>
+                <input readonly type="text" class="form-control" id="complaintDepartment"
+                  value="{{complaint.municipality?.department?.name}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="complaintMunicipality">Municipio</label>
+                <input readonly type="text" class="form-control" id="complaintMunicipality"
+                  value="{{complaint.municipality?.name}}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="addressProviderComplaint">Dirección de comercio</label>
+                <textarea readonly class="form-control" id="addressProviderComplaint" value="{{complaint.address}}"
+                  rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="complaintDetail">Detalle de queja</label>
+                <textarea readonly class="form-control" id="complaintDetail" value="{{complaint.complaintDetail}}"
+                  rows="3"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="complaintRequest">Solicitud del usuario</label>
+                <textarea readonly class="form-control" id="complaintRequest" value="{{complaint.complaintRequest}}"
+                  rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="statusId">Nuevo estado</label>
+                <select id="statusId" class="form-control" [(ngModel)]="statusId">
+                  <option value="{{status.id}}" *ngFor="let status of statuses">{{status.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="app-modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="myLargeModalLabel.hide(); closeModal();">Cerrar</button>
+            <button type="button" class="btn btn-primary"
+              (click)="updateComplaint(); myLargeModalLabel.hide();">Actualizar
+              queja</button>
+          </div>
+        </app-ui-modal>
       </div>
     </app-card>
   </div>
-  <!-- [ dark-table ] end -->
-  <!-- [ striped-table ] start -->
-  <div class="col-xl-12">
-    <app-card cardTitle="Striped Table" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-  <!-- [ striped-table ] end -->
-  <!-- [ Contextual-table ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Contextual Classes" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr class="table-active">
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr class="table-success">
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="table-warning">
-            <td>5</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="table-danger">
-            <td>7</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="table-info">
-            <td>9</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-  <!-- [ Contextual-table ] end -->
-  <!-- [ Background-Utilities ] start -->
-  <div class="col-md-6">
-    <app-card cardTitle="Background Utilities" blockClass="table-border-style">
-      <div class="table-responsive">
-        <table class="table table-dark">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr class="bg-primary">
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr class="bg-success">
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="bg-warning">
-            <td>5</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="bg-danger">
-            <td>7</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr class="bg-info">
-            <td>9</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-  <!-- [ Background-Utilities ] end -->
 </div>

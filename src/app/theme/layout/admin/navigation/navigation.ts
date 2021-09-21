@@ -28,34 +28,26 @@ export interface Navigation extends NavigationItem {
 const NavigationItems = [
   {
     id: 'chart-maps',
-    title: 'Reportería',
+    title: 'Utilidades Diaco',
     type: 'group',
     icon: 'feather icon-pie-chart',
     children: [
       {
         id: 'charts',
-        title: 'Charts',
+        title: 'Reportería',
         type: 'item',
         url: '/charts/apex',
         classes: 'nav-item',
         icon: 'feather icon-pie-chart'
       },
       {
-        id: 'forms-element',
-        title: 'Forms',
-        type: 'item',
-        url: '/forms/basic',
-        classes: 'nav-item',
-        icon: 'feather icon-file-text'
-      },
-      {
         id: 'bootstrap',
-        title: 'Tables',
+        title: 'Quejas',
         type: 'item',
         url: '/tbl-bootstrap/bt-basic',
         classes: 'nav-item',
         icon: 'feather icon-server'
-      }
+      },
     ]
   }
 ];

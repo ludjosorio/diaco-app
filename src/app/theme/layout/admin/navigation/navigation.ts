@@ -36,7 +36,7 @@ const NavigationItems = [
         id: 'charts',
         title: 'Reportería',
         type: 'item',
-        url: '/reporteria/diaco',
+        url: '/reporteria/quejas',
         classes: 'nav-item',
         icon: 'feather icon-pie-chart'
       },

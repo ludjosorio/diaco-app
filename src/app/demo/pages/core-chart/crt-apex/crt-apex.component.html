@@ -9,6 +9,16 @@
       <app-apex-chart chartID="line-chart-2-cac" [chartConfig]="data.months"></app-apex-chart>
     </app-card>
   </div>
+  <div class="col-md-6">
+    <app-card cardTitle="Quejas por región" [options]="false">
+      <app-apex-chart chartID="pie-chart-6-cac" [chartConfig]="data.regions"></app-apex-chart>
+    </app-card>
+  </div>
+  <div class="col-md-6">
+    <app-card cardTitle="Quejas por estado" [options]="false">
+      <app-apex-chart chartID="pie-chart-7-cac" [chartConfig]="data.statuses"></app-apex-chart>
+    </app-card>
+  </div>
   <div class="col-md-12">
     <app-card cardTitle="Top 10 - Quejas por Comercio" [options]="false">
       <app-apex-chart chartID="line-chart-3-cac" [chartConfig]="data.providers"></app-apex-chart>
@@ -22,11 +32,6 @@
   <div class="col-md-12">
     <app-card cardTitle="Top 10 - Quejas por departamento" [options]="false">
       <app-apex-chart chartID="line-chart-5-cac" [chartConfig]="data.departments"></app-apex-chart>
-    </app-card>
-  </div>
-  <div class="col-md-12">
-    <app-card cardTitle="Quejas por región" [options]="false">
-      <app-apex-chart chartID="pie-chart-6-cac" [chartConfig]="data.regions"></app-apex-chart>
     </app-card>
   </div>
 </div>

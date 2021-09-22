@@ -8,7 +8,11 @@ import { ChartDB } from './chart/chart-data';
   styleUrls: ['./crt-apex.component.scss']
 })
 export class CrtApexComponent implements OnInit {
-  public data = Object({ years: ChartDB.line1CAC, months: ChartDB.line1CAC, providers: ChartDB.line1CAC, consumers: ChartDB.line1CAC, departments: ChartDB.line1CAC, regions: ChartDB.pie1CAC });
+  public data = {
+    years: ChartDB.line1CAC, months: ChartDB.line1CAC,
+    providers: ChartDB.line1CAC, consumers: ChartDB.line1CAC,
+    departments: ChartDB.line1CAC, regions: ChartDB.pie1CAC, statuses: ChartDB.pie1CAC
+  };
 
   constructor(
     private api: ApiService,

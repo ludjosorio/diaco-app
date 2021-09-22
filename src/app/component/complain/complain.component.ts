@@ -77,8 +77,12 @@ export class ComplainComponent implements OnInit {
 
   setAnonymous() {
     this.anonymous = !this.anonymous;
-    this.complaintForm.get('consumer').reset();
-    this.complaintForm.controls.consumer.enable();
+    if (this.anonymous) {
+      this.complaintForm.controls.consumer.disable();
+    } else {
+      this.complaintForm.get('consumer').reset();
+      this.complaintForm.controls.consumer.enable();
+    }
   }
 
   async getDependencyListings(): Promise<void> {
@@ -111,12 +115,11 @@ export class ComplainComponent implements OnInit {
       if (this.anonymous) {
         data.consumer = Object({});
         data.anonymous = true;
-        this.complaintForm.controls.consumer.disable();
       } else {
         data.anonymous = false;
         this.complaintForm.controls.consumer.enable();
       }
-      // this.findInvalidControls();
+      this.findInvalidControls();
       const response = await this.api.post('/complain', data);
       this.complaint = response.data;
       this.complaintCreated = true;

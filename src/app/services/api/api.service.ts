@@ -61,28 +61,7 @@ export class ApiService {
       }
       return result;
     } catch (error) {
-      let stringError = '';
-      if (error) {
-        if (error.error && error.error.message) {
-          stringError = `${error.error.message}`;
-        }
-        else if (error.status === 0) {
-          stringError = `${error.statusText}`;
-        }
-        else if (error.message) {
-          stringError = `${error.message}`;
-        }
-        else if (error.statusText) {
-          stringError = `${error.statusText}`;
-        }
-        else {
-          stringError = `Don't possible to process the error information: ${JSON.stringify(error)}`;
-        }
-      } else {
-        stringError = `Don't possible to process the error information`;
-      }
-
-      throw stringError;
+      throw error.error;
     }
   }
 

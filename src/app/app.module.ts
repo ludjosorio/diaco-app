@@ -26,6 +26,7 @@ import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComplainComponent } from './component/complain/complain.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VerifyComplaintComponent } from './component/complain/verify-complaint/verify-complaint.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     NavRightComponent,
     ConfigurationComponent,
     ToggleFullScreenDirective,
-    ComplainComponent
+    ComplainComponent,
+    VerifyComplaintComponent
   ],
   imports: [
     BrowserModule,

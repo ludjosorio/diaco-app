@@ -318,7 +318,8 @@
           <app-toast uID="toast6" toastTitle="Nueva alerta" toastCaption="" toastClass="m-b-10">
             {{toastMessage}}
           </app-toast>
-          <button type="submit" class="btn btn-primary" [disabled]="complaintForm.invalid" (click)="createComplaint()">Crear queja</button>
+          <button type="submit" class="btn btn-primary" [disabled]="complaintForm.invalid"
+            (click)="createComplaint()">Crear queja</button>
           <small class="text-danger" *ngIf="complaintForm.invalid">
             Revisa que toda la información este ingresada y correcta
           </small>
@@ -327,7 +328,8 @@
           <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="bg-c-blue">
             <div class="row align-items-center">
               <div class="col-12">
-                <h4 class="text-c-blue">Tu queja ha sido credada correctamente. &nbsp; <i class="feather icon-check f-28"></i> </h4>
+                <h4 class="text-c-blue">Tu queja ha sido credada correctamente, tú # de queja es {{complaint.id}} &nbsp;
+                  <i class="feather icon-check f-28"></i> </h4>
               </div>
             </div>
             <div class="app-card-footer">

@@ -25,6 +25,7 @@ export class ComplainComponent implements OnInit {
   public anonymous: boolean = false;
   public loadDependencies: boolean = true;
   public toastMessage = '';
+  public complaint = Object({});
 
   public complaintForm = this.fb.group({
     consumer: this.fb.group({
@@ -116,7 +117,8 @@ export class ComplainComponent implements OnInit {
         this.complaintForm.controls.consumer.enable();
       }
       // this.findInvalidControls();
-      await this.api.post('/complain', data);
+      const response = await this.api.post('/complain', data);
+      this.complaint = response.data;
       this.complaintCreated = true;
       this.complaintForm.reset();
     } catch (error) {

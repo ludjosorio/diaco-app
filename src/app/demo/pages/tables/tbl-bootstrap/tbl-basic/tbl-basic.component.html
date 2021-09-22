@@ -31,10 +31,11 @@
               <td>
                 <i class="feather icon-edit text-muted" (click)="editComplaint(i); myLargeModalLabel.show()"></i>
               </td>
-              <td
-                [style]="complaint.status?.name === 'CREADA' ? 'background-color: #005bff63' :
-                complaint.status?.name==='EN TRÁMITE' ? 'background-color: #ff870bc7' : 'background-color: #29d229bf' ">
-                {{complaint.status.name}}</td>
+              <td class="text-center">
+                <label class="badge" [ngClass]="complaint.status?.name === 'CREADA' ? 'badge-light-primary' :
+                complaint.status?.name==='EN TRÁMITE' ? 'badge-light-warning' : 'badge-light-success' ">
+                  {{complaint.status.name}}</label>
+              </td>
               <td>{{complaint.id}}</td>
               <td>{{complaint.invoiceNumber}}</td>
               <td>{{complaint.invoiceDate | date }}</td>

@@ -6,7 +6,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'apex',
+        path: 'diaco',
         loadChildren: () => import('./crt-apex/crt-apex.module').then(module => module.CrtApexModule)
       }
     ]

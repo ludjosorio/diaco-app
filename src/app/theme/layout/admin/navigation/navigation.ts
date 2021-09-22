@@ -36,7 +36,7 @@ const NavigationItems = [
         id: 'charts',
         title: 'Reportería',
         type: 'item',
-        url: '/charts/apex',
+        url: '/reporteria/diaco',
         classes: 'nav-item',
         icon: 'feather icon-pie-chart'
       },
@@ -44,7 +44,7 @@ const NavigationItems = [
         id: 'bootstrap',
         title: 'Quejas',
         type: 'item',
-        url: '/tbl-bootstrap/bt-basic',
+        url: '/quejas/listado',
         classes: 'nav-item',
         icon: 'feather icon-server'
       },

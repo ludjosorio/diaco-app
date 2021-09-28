@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService } from 'src/app/services/api/api.service';
+import { ComplaintService } from 'src/app/services/complaint/complaint.service';
 
 @Component({
   selector: 'app-tbl-basic',
@@ -16,10 +17,19 @@ export class TblBasicComponent implements OnInit {
   public complaint = Object({});
   public statuses = [];
 
-  constructor(private api: ApiService) { }
+  constructor(
+    private api: ApiService,
+    private complaintService: ComplaintService
+  ) { }
 
   ngOnInit() {
     this.getData();
+    this.getDataCharts();
+  }
+
+
+  getDataCharts() {
+    this.complaintService.getDataCharts();
   }
 
   async getData() {

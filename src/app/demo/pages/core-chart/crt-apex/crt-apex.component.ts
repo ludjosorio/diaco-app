@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
+import { ComplaintService } from 'src/app/services/complaint/complaint.service';
 import { ChartDB } from './chart/chart-data';
 
 @Component({
@@ -16,13 +17,14 @@ export class CrtApexComponent implements OnInit {
 
   constructor(
     private api: ApiService,
+    private complaintService: ComplaintService
   ) {
+    this.data = complaintService.data;
   }
 
   async ngOnInit() {
     try {
-      const { data } = await this.api.get('/complain/report-charts');
-      this.data = data;
+      this.data = this.complaintService.data;
     } catch (error) {
       console.log(error);
     }

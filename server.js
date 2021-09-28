@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(requireHTTPS);
+/** app.use(requireHTTPS);
 
 function requireHTTPS(req, res, next) {
     // The 'x-forwarded-proto' check is for Heroku
@@ -11,7 +11,7 @@ function requireHTTPS(req, res, next) {
         return res.redirect('https://' + req.get('host') + req.url);
     }
     next();
-}
+} **/
 
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/diaco-app'));
